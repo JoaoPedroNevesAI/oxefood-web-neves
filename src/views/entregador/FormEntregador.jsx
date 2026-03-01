@@ -1,10 +1,58 @@
+import axios from "axios";
 import InputMask from 'comigo-tech-react-input-mask';
-import React from "react";
+import React, {useState} from "react";
 import { Button, Container, Divider, Form, Icon, Radio } from 'semantic-ui-react';
 
-export default function FormCliente () {
+export default function FormEntregador () {
+
+    const [nome, setNome] = useState();
+    const [cpf, setCpf] = useState();
+    const [rg, setRg] = useState();
+    const [dataNascimento, setDataNascimento] = useState();
+    const [foneCelular, setFoneCelular] = useState();
+    const [foneFixo, setFoneFixo] = useState();
+    const [qtdEntregasRealizadas, setQtdEntregasRealizadas] = useState();
+    const [valorFrete, setValorFrete] = useState();
+    const [enderecoRua, setEnderecoRua] = useState();
+    const [enderecoComplemento, setEnderecoComplemento] = useState();
+    const [enderecoNumero, setEnderecoNumero] = useState();
+    const [enderecoBairro, setEnderecoBairro] = useState();
+    const [enderecoCidade, setEnderecoCidade] = useState();
+    const [enderecoCep, setEnderecoCep] = useState();
+    const [enderecoUf, setEnderecoUf] = useState();
+    const [ativo, setAtivo] = useState();
+
+
+    function salvar() {
+
+		let entregadorRequest = {
+		     nome: nome,
+		     cpf: cpf,
+             rg: rg,
+		     dataNascimento: dataNascimento,
+		     foneCelular: foneCelular,
+		     foneFixo: foneFixo,
+             qtdEntregasRealizadas: qtdEntregasRealizadas,
+             valorFrete: valorFrete,
+             enderecoRua: enderecoRua,
+             enderecoComplemento: enderecoComplemento,
+             enderecoNumero: enderecoNumero,
+             enderecoBairro: enderecoBairro,
+             enderecoCidade: enderecoCidade,
+             enderecoCep: enderecoCep,
+             enderecoUf: enderecoUf,
+             ativo: ativo
+		}
+	
+		axios.post("http://localhost:8080/api/entregador", entregadorRequest)
+		.then((response) => {
+		     console.log('Entregador cadastrado com sucesso.')
+		})
+		.catch((error) => {
+		     console.log('Erro ao incluir o entregador.')
+		})
+	}
     
-    const [ativo, setAtivo] = React.useState(null);
     return (
 
         <div>
@@ -28,6 +76,7 @@ export default function FormCliente () {
                                     fluid
                                     label='Nome'
                                     maxLength="100"
+			                        onChange={e => setNome(e.target.value)}
                                 />
 
                                 <Form.Input
@@ -37,6 +86,7 @@ export default function FormCliente () {
                                     <InputMask
                                         required
                                         mask="999.999.999-99"
+			                        onChange={e => setCpf(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -45,6 +95,7 @@ export default function FormCliente () {
                                     label='RG'>
                                     <InputMask 
                                         mask="99.999.999"
+                                        onChange={e => setRg(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -62,6 +113,7 @@ export default function FormCliente () {
                                         mask="99/99/9999"
                                         maskChar={null}
                                         placeholder="Ex: 20/03/1985"
+                                        onChange={e => setDataNascimento(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -72,6 +124,7 @@ export default function FormCliente () {
                                     width={6}>
                                     <InputMask 
                                         mask="(99) 9999.9999"
+                                        onChange={e => setFoneCelular(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -80,14 +133,17 @@ export default function FormCliente () {
                                     label='Fone Fixo'
                                     width={6}>
                                     <InputMask 
-                                        mask="(99) 9999.9999" 
+                                        mask="(99) 9999.9999"
+                                        onChange={e => setFoneFixo(e.target.value)}
                                     /> 
                                 </Form.Input>
 
                                 <Form.Input
                                     fluid
                                     label='QTD Entregas realizadas'
-                                    width={6}>
+                                    width={6}
+                                    onChange={e => setQtdEntregasRealizadas(e.target.value)}
+                                    >
                                 </Form.Input>
 
                                 <Form.Input
@@ -95,7 +151,8 @@ export default function FormCliente () {
                                     label='Valor por Frete'
                                     width={6}>
                                     <InputMask 
-                                        mask="R$99.99" 
+                                        mask="99.99"
+                                        onChange={e => setValorFrete(e.target.value)} 
                                     /> 
                                 </Form.Input>
 
@@ -108,12 +165,15 @@ export default function FormCliente () {
                                     label='Rua'
                                     width={12}
                                     maxLength="100"
+                                    onChange={e => setEnderecoRua(e.target.value)}
                                 />
 
                                 <Form.Input
                                     fluid
                                     label='Número'
-                                    width={4}>
+                                    width={4}
+                                    onChange={e => setEnderecoNumero(e.target.value)}
+                                    >
                                 </Form.Input>
 
                             </Form.Group>
@@ -125,12 +185,14 @@ export default function FormCliente () {
                                     label='Bairro'
                                     width={7}
                                     maxLength="100"
+                                    onChange={e => setEnderecoBairro(e.target.value)}
                                 />
 
                                 <Form.Input
                                     fluid
                                     label='Cidade'
                                     width={7}
+                                    onChange={e => setEnderecoCidade(e.target.value)}
                                     >
                                 </Form.Input>
 
@@ -141,6 +203,7 @@ export default function FormCliente () {
                                     >
                                     <InputMask 
                                         mask="99.999.999"
+                                        onChange={e => setEnderecoCep(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -158,6 +221,7 @@ export default function FormCliente () {
                                         { key: 'RJ', value: 'RJ', text: 'Rio de Janeiro' },
                                         { key: 'MG', value: 'MG', text: 'Minas Gerais' }
                                     ]}
+                                    onChange={e => setEnderecoUf(e.target.value)}
                                 />
                             </Form.Group>
 
@@ -167,6 +231,7 @@ export default function FormCliente () {
                                     fluid
                                     label='Complemento'
                                     maxLength="100"
+                                    onChange={e => setEnderecoComplemento(e.target.value)}
                                 />
 
                             </Form.Group>
@@ -212,6 +277,7 @@ export default function FormCliente () {
                                 labelPosition='left'
                                 color='blue'
                                 floated='right'
+                                onClick={() => salvar()}
                             >
                                 <Icon name='save' />
                                 Salvar
