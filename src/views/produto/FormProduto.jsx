@@ -2,7 +2,7 @@ import InputMask from 'comigo-tech-react-input-mask';
 import React from "react";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
-export default function FormCliente () {
+export default function FormProduto () {
 
     return (
 
